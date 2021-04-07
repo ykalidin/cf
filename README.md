@@ -28,3 +28,4 @@ cf enable-feature-flag diego_docker
 
 ## Deploying BE application
 
+cf7 push beinmemory1 -f beinmemory1_manifest.yml
