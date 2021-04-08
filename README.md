@@ -34,16 +34,22 @@ TABLE
 
 ## Service Discovery
 
+For Service Discovery add below network policies with respect to application cluster type.
+
 ### Activespaces cluster
 
 cf add-network-policy <CACHE_APP_NAME> <INFERENCE_APP_NAME> --port 50000 --protocol tcp
+
 cf add-network-policy <INFERENCE_APP_NAME> <CACHE_APP_NAME> --port 50000 --protocol tcp
 
 ### FTL Cluster
 
 cf add-network-policy <CACHE_APP_NAME> <INFERENCE_APP_NAME> --port 47100-47110 --protocol tcp
+
 cf add-network-policy <INFERENCE_APP_NAME> <CACHE_APP_NAME> --port 47100-47110 --protocol tcp
+
 cf add-network-policy <CACHE_APP_NAME> <INFERENCE_APP_NAME> --port 47500-47510 --protocol tcp
+
 cf add-network-policy <INFERENCE_APP_NAME> <CACHE_APP_NAME> --port 47500-47510 --protocol tcp
 
 ## Testing the BE application
