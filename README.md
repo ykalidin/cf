@@ -38,9 +38,9 @@ For Service Discovery add below network policies with respect to application clu
 
 ### Activespaces cluster
 
-cf add-network-policy <CACHE_APP_NAME> <INFERENCE_APP_NAME> --port 50000 --protocol tcp
+`cf add-network-policy <CACHE_APP_NAME> <INFERENCE_APP_NAME> --port 50000 --protocol tcp
 
-cf add-network-policy <INFERENCE_APP_NAME> <CACHE_APP_NAME> --port 50000 --protocol tcp
+cf add-network-policy <INFERENCE_APP_NAME> <CACHE_APP_NAME> --port 50000 --protocol tcp`
 
 ### FTL Cluster
 
