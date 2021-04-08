@@ -28,4 +28,18 @@ cf enable-feature-flag diego_docker
 
 ## Deploying BE application
 
-cf7 push beinmemory1 -f beinmemory1_manifest.yml
+cf7 push <APP_NAME> -f <Manifest_file>
+
+## Testing the BE application
+
+Add Route for the application port:
+1)cf app <APP_NAME> --guid
+2)cf curl /v2/apps/<APP_GUID> -X PUT -d '{"ports": [APP_PORT]}'
+3)cf curl /v2/apps/<APP_GUID>/routes
+4)cf curl /v2/routes/<ROUTE_GUID>/route_mappings
+5)cf curl /v2/route_mappings -X POST -d '{"app_guid": "<APP_GUID>", "route_guid": "<ROUTE_GUID>", "app_port": <APP_PORT>}'
+6)Delete the other route mappings:
+cf curl /v2/route_mappings/<ROUTE_MAPPING_ID> -X DELETE
+
+Hit the BE application with the route of the deployed cloud foundry application obtained using the below command.
+cf app <APP_NAME>
