@@ -11,26 +11,51 @@ This demonstrates how to run the Business Events application in Cloud foundry.
 
 1)Login to the cloud foundry using the below command:
 
-cf login -a API-URL -u USERNAME -p PASSWORD
+     cf login -a API-URL -u USERNAME -p PASSWORD
 
--API-URL is your API endpoint, the URL of the Cloud Controller in your TAS for VMs instance.
--USERNAME and PASSWORD are the Admin credentials in UAA section from Small footprint TAS tile Credentials tab.
+       -API-URL is your API endpoint, the URL of the Cloud Controller in your TAS for VMs instance.
+       -USERNAME and PASSWORD are the Admin credentials in UAA section from Small footprint TAS tile Credentials tab.
 
 2)Target a specific organization and space. 
-cf target -o ORG -s SPACE
+     
+     cf target -o ORG -s SPACE
 
--ORG is the org you want to target.
--SPACE is the space you want to target.
+       -ORG is the org you want to target.
+       -SPACE is the space you want to target.
+
 Note: Required organizations and spaces can be created using the cf commands
 
 3)Enable the diego-docker feature to run docker images. 
-cf enable-feature-flag diego_docker
+     
+     cf enable-feature-flag diego_docker
 
 ## Deploying BE application
 
-cf7 push <APP_NAME> -f <Manifest_file>
+     cf7 push <APP_NAME> -f <Manifest_file>
 
-TABLE
+Use the respective manifest file:
+
+| Topology Name | Manifest File | Application port |
+| ------------- | :---: | :---: |
+| Unclustered Inmemory | inmemory.yml | 8108 |
+| Unclustered store AS4 |  |  |
+| Unclustered store Cassandra |  |  |
+| clustered store AS4 |  |  |
+| clustered store Cassandra |  |  |
+| clustered Cache AS2 None | as2pnone.yml | 8209 |
+| clustered Cache AS2 sharednothing | as2snone.yml | 8209 |
+| clustered Cache AS2 store | as2mysql.yml | 8209 |
+| clustered Cache FTL None |  |  |
+| clustered Cache FTL sharednothing |  |  |
+| clustered Cache FTL store RDBMS | ftlmysql.yml | 8209 |
+| clustered Cache FTL store AS4 |  |  |
+| clustered Cache FTL store Cassandra |  |  |
+| clustered Cache IGNITE None | igntpnone.yml | 8109 |
+| clustered Cache IGNITE sharednothing |  |  |
+| clustered Cache IGNITE store RDBMS |  |  |
+| clustered Cache IGNITE store AS4 |  |  |
+| clustered Cache IGNITE store Cassandra |  |  |
+
 
 ## Service Discovery
 
