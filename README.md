@@ -1,6 +1,6 @@
 # Cloud Foundry
 
-This demonstrates how to run the Business Events application in Cloud foundry.
+This demonstrates how to run the Business Events applications in Cloud foundry.
 
 ## Prerequisites
 * Install Ops Manager on available Iaas platforms referring Ops Manager [https://docs.pivotal.io/ops-manager/2-10/install/index.html].
@@ -37,24 +37,24 @@ Use the respective manifest file:
 
 | Topology Name | Manifest File |
 | ------------- | :---: |
-| Unclustered Inmemory | inmemory.yml |
+| Inmemory | inmemory.yml |
 | Unclustered store AS4 |  |
 | Unclustered store Cassandra |  |
-| clustered store AS4 |  |
-| clustered store Cassandra |  |
-| clustered Cache AS2 None | as2pnone.yml |
-| clustered Cache AS2 sharednothing | as2snone.yml |
-| clustered Cache AS2 store | as2mysql.yml |
-| clustered Cache FTL None | ftlpnone.yml |
-| clustered Cache FTL sharednothing | ftlsnone.yml |
-| clustered Cache FTL store RDBMS | ftlmysql.yml |
-| clustered Cache FTL store AS4 |  |
-| clustered Cache FTL store Cassandra |  |
-| clustered Cache IGNITE None | igntpnone.yml |
-| clustered Cache IGNITE sharednothing | igntsnone.yml |
-| clustered Cache IGNITE store RDBMS | igntmysql.yml |
-| clustered Cache IGNITE store AS4 |  |
-| clustered Cache IGNITE store Cassandra |  |
+| AS2 Clustered Cache Persistence None | as2pnone.yml |
+| AS2 Clustered Cache Shared Nothing | as2snone.yml |
+| AS2 Clustered Cache Store RDBMS| as2mysql.yml |
+| FTL Clustered Store AS4 |  |
+| FTL Clustered Store Cassandra |  |
+| FTL Clustered Cache Persistence None | ftlpnone.yml |
+| FTL Clustered Cache Shared Nothing | ftlsnone.yml |
+| FTL Clustered Cache Store RDBMS | ftlmysql.yml |
+| FTL Clustered Cache Store AS4 |  |
+| FTL Clustered Cache Store Cassandra |  |
+| IGNITE Clustered Cache Persistence None | igntpnone.yml |
+| IGNITE Clustered Cache Shared Nothing | igntsnone.yml |
+| IGNITE Clustered Cache Store RDBMS | igntmysql.yml |
+| IGNITE Clustered Cache Store AS4 |  |
+| IGNITE Clustered Cache Store Cassandra |  |
 
 
 ## Service Discovery
