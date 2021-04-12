@@ -35,38 +35,38 @@ Note: Required organizations and spaces can be created using the cf commands
 
 Use the respective manifest file:
 
-| Topology Name | Manifest File | Application port |
-| ------------- | :---: | :---: |
-| Unclustered Inmemory | inmemory.yml | 8108 |
-| Unclustered store AS4 |  |  |
-| Unclustered store Cassandra |  |  |
-| clustered store AS4 |  |  |
-| clustered store Cassandra |  |  |
-| clustered Cache AS2 None | as2pnone.yml | 8209 |
-| clustered Cache AS2 sharednothing | as2snone.yml | 8209 |
-| clustered Cache AS2 store | as2mysql.yml | 8209 |
-| clustered Cache FTL None |  |  |
-| clustered Cache FTL sharednothing |  |  |
-| clustered Cache FTL store RDBMS | ftlmysql.yml | 8209 |
-| clustered Cache FTL store AS4 |  |  |
-| clustered Cache FTL store Cassandra |  |  |
-| clustered Cache IGNITE None | igntpnone.yml | 8109 |
-| clustered Cache IGNITE sharednothing |  |  |
-| clustered Cache IGNITE store RDBMS |  |  |
-| clustered Cache IGNITE store AS4 |  |  |
-| clustered Cache IGNITE store Cassandra |  |  |
+| Topology Name | Manifest File |
+| ------------- | :---: |
+| Unclustered Inmemory | inmemory.yml |
+| Unclustered store AS4 |  |
+| Unclustered store Cassandra |  |
+| clustered store AS4 |  |
+| clustered store Cassandra |  |
+| clustered Cache AS2 None | as2pnone.yml |
+| clustered Cache AS2 sharednothing | as2snone.yml |
+| clustered Cache AS2 store | as2mysql.yml |
+| clustered Cache FTL None | ftlpnone.yml |
+| clustered Cache FTL sharednothing | ftlsnone.yml |
+| clustered Cache FTL store RDBMS | ftlmysql.yml |
+| clustered Cache FTL store AS4 |  |
+| clustered Cache FTL store Cassandra |  |
+| clustered Cache IGNITE None | igntpnone.yml |
+| clustered Cache IGNITE sharednothing | igntsnone.yml |
+| clustered Cache IGNITE store RDBMS | igntmysql.yml |
+| clustered Cache IGNITE store AS4 |  |
+| clustered Cache IGNITE store Cassandra |  |
 
 
 ## Service Discovery
 
 For Service Discovery add below network policies with respect to application cluster type.
 
-### Activespaces cluster
+### Activespaces cluster with Activespaces cache
 
      cf add-network-policy <CACHE_APP_NAME> <INFERENCE_APP_NAME> --port 50000 --protocol tcp
      cf add-network-policy <INFERENCE_APP_NAME> <CACHE_APP_NAME> --port 50000 --protocol tcp
 
-### FTL Cluster
+### FTL and Ignite Cluster with Ignite cache
 
      cf add-network-policy <CACHE_APP_NAME> <INFERENCE_APP_NAME> --port 47100-47110 --protocol tcp
      cf add-network-policy <INFERENCE_APP_NAME> <CACHE_APP_NAME> --port 47100-47110 --protocol tcp
@@ -77,18 +77,30 @@ For Service Discovery add below network policies with respect to application clu
 
 Add Route for the application port:
 
-1)cf app <APP_NAME> --guid
+1)Get the APP_GUID from the below command:
+    
+    cf app <APP_NAME> --guid
 
-2)cf curl /v2/apps/<APP_GUID> -X PUT -d '{"ports": [APP_PORT]}'
+2)Add the application port: 
+    
+    cf curl /v2/apps/<APP_GUID> -X PUT -d '{"ports": [APP_PORT]}'
 
-3)cf curl /v2/apps/<APP_GUID>/routes
+3)Get the ROUTE_GUID from the below command:
+    
+    cf curl /v2/apps/<APP_GUID>/routes
 
-4)cf curl /v2/routes/<ROUTE_GUID>/route_mappings
+4)Add the required route mapping to the application:
+    
+    cf curl /v2/route_mappings -X POST -d '{"app_guid": "<APP_GUID>", "route_guid": "<ROUTE_GUID>", "app_port": <APP_PORT>}'
 
-5)cf curl /v2/route_mappings -X POST -d '{"app_guid": "<APP_GUID>", "route_guid": "<ROUTE_GUID>", "app_port": <APP_PORT>}'
+5)Verify the Route mappings:
+    
+    cf curl /v2/routes/<ROUTE_GUID>/route_mappings
 
-6)Delete the other route mappings:
-cf curl /v2/route_mappings/<ROUTE_MAPPING_ID> -X DELETE
+6)Delete the other unneccesary route mappings:
+    
+    cf curl /v2/route_mappings/<ROUTE_MAPPING_ID> -X DELETE
 
-Hit the BE application with the route of the deployed cloud foundry application obtained using the below command.
-cf app <APP_NAME>
+Hit the BE application with the route of the deployed cloud foundry application obtained using the below command:
+     
+    cf app <APP_NAME>
